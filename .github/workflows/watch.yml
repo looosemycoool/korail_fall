@@ -2,6 +2,9 @@ name: korail-watch
 on:
   workflow_dispatch:
 
+permissions:
+  actions: write
+
 jobs:
   watch:
     runs-on: ubuntu-latest
@@ -19,3 +22,9 @@ jobs:
           KORAIL_ID: ${{ secrets.KORAIL_ID }}
           KORAIL_PW: ${{ secrets.KORAIL_PW }}
           NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+      - name: restart myself
+        if: always()
+        run: gh workflow run watch.yml --ref main
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
