@@ -1,0 +1,19 @@
+name: korail-watch
+on:
+  workflow_dispatch:
+
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install korail2 requests
+      - run: python korail_watch.py
+        env:
+          KORAIL_ID: ${{ secrets.KORAIL_ID }}
+          KORAIL_PW: ${{ secrets.KORAIL_PW }}
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
