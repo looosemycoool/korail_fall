@@ -17,9 +17,9 @@ INTERVAL = 30              # 초
 
 def notify(msg):
     requests.post(
-        f"https://ntfy.sh/{NTFY_TOPIC}",
-        data=msg.encode("utf-8"),
-        headers={"Title": "KTX 빈자리", "Priority": "high", "Tags": "train"},
+        "https://ntfy.sh",
+        json={"topic": NTFY_TOPIC, "title": "KTX 빈자리", "message": msg,
+              "priority": 5, "tags": ["train"]},
         timeout=10,
     )
 
