@@ -5,6 +5,10 @@ on:
 permissions:
   actions: write
 
+concurrency:
+  group: korail-watch
+  cancel-in-progress: true
+
 jobs:
   watch:
     runs-on: ubuntu-latest
@@ -23,7 +27,6 @@ jobs:
           KORAIL_PW: ${{ secrets.KORAIL_PW }}
           NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
       - name: restart myself
-        if: always()
         run: gh workflow run watch.yml --ref main
         env:
           GH_TOKEN: ${{ github.token }}
